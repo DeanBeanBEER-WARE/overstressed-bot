@@ -17,6 +17,8 @@ import { restartCommand } from './commands/restart.js';
 import { consoleCommand } from './commands/console.js';
 import { maintenanceCommand } from './commands/maintenance.js';
 import { purgeCommand } from './commands/purge.js';
+import { muteCommand } from './commands/mute.js';
+import { unmuteCommand } from './commands/unmute.js';
 
 const commands = [
   rankCommand.data.toJSON(),
@@ -36,6 +38,8 @@ const commands = [
   consoleCommand.data.toJSON(),
   maintenanceCommand.data.toJSON(),
   purgeCommand.data.toJSON(),
+  muteCommand.data.toJSON(),
+  unmuteCommand.data.toJSON(),
 ];
 
 const rest = new REST().setToken(config.discord.token);
