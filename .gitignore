@@ -1,0 +1,21 @@
+# Environment variables (contains sensitive tokens)
+.env
+
+# User data (contains Discord IDs and Minecraft names)
+links.json
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*

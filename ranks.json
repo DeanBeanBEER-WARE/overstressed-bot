@@ -1,0 +1,54 @@
+{
+  "owner": {
+    "roleId": "1470449611570151434",
+    "displayName": "Owner"
+  },
+  "dev": {
+    "roleId": "1468399574552018956",
+    "displayName": "Dev"
+  },
+  "management": {
+    "roleId": "1468238763649011907",
+    "displayName": "Management"
+  },
+  "admin": {
+    "roleId": "1468167659240558635",
+    "displayName": "Admin"
+  },
+  "trialadmin": {
+    "roleId": "1468238122553704620",
+    "displayName": "Trial Admin"
+  },
+  "mod": {
+    "roleId": "1468233265101017089",
+    "displayName": "Mod"
+  },
+  "trialmod": {
+    "roleId": "1468237463565635811",
+    "displayName": "Trial Mod"
+  },
+  "supporter": {
+    "roleId": "1473023389814886480",
+    "displayName": "Supporter"
+  },
+  "builder": {
+    "roleId": "",
+    "displayName": "Builder"
+  },
+  "vipplus": {
+    "roleId": "",
+    "displayName": "VIP+"
+  },
+  "vip": {
+    "roleId": "1470506730092757185",
+    "displayName": "VIP"
+  },
+  "default": {
+    "roleId": "1468234100208042218",
+    "displayName": "Member"
+  },
+  "test": {
+    "roleId": "",
+    "displayName": "Test Rank"
+  }
+}
