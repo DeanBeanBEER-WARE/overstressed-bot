@@ -49,7 +49,9 @@ A comprehensive Discord bot for Minecraft NeoForge server management with full D
 ### Player Management
 | Command | Description | Permissions |
 |---------|-------------|-------------|
-| `/kick <minecraftname> [reason]` | Kick a player from the server | Admin |
+| `/kick <minecraftname> [reason]` | Kick a player from the server | Moderator |
+| `/mute <player\|user> [duration] [reason]` | Mute a player (duration in minutes, empty = permanent) | Moderator |
+| `/unmute <player\|user>` | Unmute a player | Moderator |
 | `/whitelist <add\|remove> <minecraftname>` | Manage server whitelist | Admin |
 | `/broadcast <message>` | Send announcement to all players | Admin |
 
