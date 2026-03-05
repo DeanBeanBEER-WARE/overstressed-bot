@@ -16,6 +16,8 @@ import { restartCommand } from '../commands/restart.js';
 import { consoleCommand } from '../commands/console.js';
 import { maintenanceCommand } from '../commands/maintenance.js';
 import { purgeCommand } from '../commands/purge.js';
+import { muteCommand } from '../commands/mute.js';
+import { unmuteCommand } from '../commands/unmute.js';
 import { config } from '../config/config.js';
 import { webhookClient } from '../webhook/webhookClient.js';
 import { linkService } from '../services/linkService.js';
@@ -52,6 +54,8 @@ export async function createClient() {
   client.commands.set(consoleCommand.data.name, consoleCommand);
   client.commands.set(maintenanceCommand.data.name, maintenanceCommand);
   client.commands.set(purgeCommand.data.name, purgeCommand);
+  client.commands.set(muteCommand.data.name, muteCommand);
+  client.commands.set(unmuteCommand.data.name, unmuteCommand);
 
   // Handle chat bridge (Discord -> Minecraft)
   client.on(Events.MessageCreate, async message => {
