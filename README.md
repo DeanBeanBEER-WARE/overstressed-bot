@@ -9,22 +9,44 @@ A clean, production-ready Discord bot to manage Discord roles as ranks and notif
     npm install
     ```
 
-2.  **Configure Environment:**
-    - The `.env` file has been created from `.env.example`.
-    - Fill in your `DISCORD_TOKEN`, `DISCORD_CLIENT_ID`, `DISCORD_GUILD_ID`, `WEBHOOK_URL`, and `WEBHOOK_SECRET`.
-    - Optionally set `ADMIN_ROLE_ID`.
+2.  **Configure Environment Variables:**
+    Create a `.env` file with the following:
+    ```env
+    DISCORD_TOKEN='your_bot_token'
+    DISCORD_CLIENT_ID='your_client_id'
+    DISCORD_GUILD_ID='your_guild_id'
+    ADMIN_ROLE_ID='your_admin_role_id'
+    MEMBER_ROLE_ID='your_member_role_id'
+    CHAT_CHANNEL_ID='your_chat_channel_id'
+    DISCORD_WEBHOOK_URL='your_discord_webhook_url'
+    MINECRAFT_SERVER_HOST='your_server_host'
+    MINECRAFT_SERVER_PORT='your_server_port'
+    WEBHOOK_SECRET='your_webhook_secret'
+    ```
 
-3.  **Configure Ranks:**
-    - Open `src/config/ranks.js`.
-    - Replace `YOUR_ROLE_ID_HERE` with the actual Discord role ID for the `test` rank.
-    - You can add more ranks here in the future.
+3.  **Configure Webhooks:**
+    - Copy `webhooks.json.example` to `webhooks.json`
+    - Edit `webhooks.json` to add your Minecraft server webhook URLs:
+    ```json
+    [
+      {
+        "name": "Minecraft Server Main",
+        "url": "http://your-server:port/webhook"
+      }
+    ]
+    ```
+    - The webhook secret is stored securely in `.env` as `WEBHOOK_SECRET`
 
-4.  **Deploy Slash Commands:**
+4.  **Configure Ranks:**
+    - Edit `ranks.json` to match your Discord role structure
+    - Each rank maps to a Discord role ID and a Minecraft LuckPerms group
+
+5.  **Deploy Slash Commands:**
     ```bash
     npm run deploy-commands
     ```
 
-5.  **Start the Bot:**
+6.  **Start the Bot:**
     ```bash
     npm start
     ```
