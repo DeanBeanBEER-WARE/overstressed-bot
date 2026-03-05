@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { config } from '../config/config.js';
 
 /**
  * Webhook client for communicating with one or more Minecraft NeoForge server plugins.
@@ -11,7 +12,7 @@ export class WebhookClient {
 
   /**
    * Loads the list of webhooks from webhooks.json.
-   * @returns {Array<{name: string, url: string, secret: string}>}
+   * @returns {Array<{name: string, url: string}>}
    */
   loadWebhooks() {
     try {
@@ -44,7 +45,7 @@ export class WebhookClient {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'X-Auth-Token': webhook.secret,
+            'X-Auth-Token': config.webhook.secret,
           },
           body: JSON.stringify(data),
           signal: controller.signal,

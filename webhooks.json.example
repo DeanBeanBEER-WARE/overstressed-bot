@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Minecraft Server Main",
+    "url": "http://your-server-host:port/webhook"
+  },
+  {
+    "name": "Localhost Server",
+    "url": "http://localhost:3000/webhook"
+  }
+]

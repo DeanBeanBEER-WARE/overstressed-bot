@@ -4,6 +4,13 @@
 # User data (contains Discord IDs and Minecraft names)
 links.json
 
+# Webhook configuration (contains URLs and secrets)
+webhooks.json
+
+# Documentation (internal use only)
+temp.md
+AGENT.md
+
 # Dependencies
 node_modules/
 package-lock.json
