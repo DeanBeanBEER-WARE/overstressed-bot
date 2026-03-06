@@ -7,6 +7,10 @@
     "roleId": "1468399574552018956",
     "displayName": "Dev"
   },
+  "trialdev": {
+    "roleId": "1479108727742398504",
+    "displayName": "Trial Dev"
+  },
   "management": {
     "roleId": "1468238763649011907",
     "displayName": "Management"
