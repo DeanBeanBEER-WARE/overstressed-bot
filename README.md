@@ -4,15 +4,15 @@ A comprehensive Discord bot for Minecraft NeoForge server management with full D
 
 ## Features
 
-- 🔗 **Account Linking & Verification** - Link Discord accounts to Minecraft usernames with verification codes
-- 👥 **Automatic Rank Synchronization** - Discord roles automatically sync to Minecraft LuckPerms groups
-- 🎮 **Server Management** - Start, stop, restart, and manage server maintenance mode
-- 📊 **Real-time Statistics** - TPS monitoring, player statistics, leaderboards, and server status
-- 💬 **Chat Bridge** - Bi-directional Discord ↔ Minecraft chat synchronization
-- 🛡️ **Player Management** - Kick players, manage whitelist, and verify accounts
-- 🧹 **Channel Management** - Advanced message purging with support for old messages (>14 days)
-- ⚙️ **Console Access** - Execute Minecraft console commands directly from Discord
-- 🔄 **Automatic Scanning** - Periodic role scanning and rank synchronization
+-  **Account Linking & Verification** - Link Discord accounts to Minecraft usernames with verification codes
+-  **Automatic Rank Synchronization** - Discord roles automatically sync to Minecraft LuckPerms groups
+-  **Server Management** - Start, stop, restart, and manage server maintenance mode
+-  **Real-time Statistics** - TPS monitoring, player statistics, leaderboards, and server status
+-  **Chat Bridge** - Bi-directional Discord ↔ Minecraft chat synchronization
+-  **Player Management** - Kick players, manage whitelist, and verify accounts
+-  **Channel Management** - Advanced message purging with support for old messages (>14 days)
+-  **Console Access** - Execute Minecraft console commands directly from Discord
+-  **Automatic Scanning** - Periodic role scanning and rank synchronization
 
 ## Commands
 
