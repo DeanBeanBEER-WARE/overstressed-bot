@@ -1,6 +1,7 @@
 import { status } from 'minecraft-server-util';
 import { ActivityType } from 'discord.js';
 import { config } from '../config/config.js';
+import { webhookClient } from '../webhook/webhookClient.js';
 
 export class StatusService {
   constructor() {
@@ -61,22 +62,39 @@ export class StatusService {
     }
 
     try {
-      const response = await status(config.minecraft.serverHost, config.minecraft.serverPort);
-      
-      const statusText = `Online: ${response.players.online}/${response.players.max}`;
-      
-      this.client.user.setPresence({
-        activities: [{ name: statusText, type: ActivityType.Watching }],
-        status: 'online',
+      // 1. Try to get status via Webhook (more reliable TCP connection)
+      const webhookResponses = await webhookClient.notify({ action: 'get_online_players' });
+      const mainResponse = webhookResponses.find(r => r.ok && r.data);
+
+      if (mainResponse && mainResponse.data) {
+        const { onlineCount, maxCount } = mainResponse.data;
+        this.updatePresence(`Online: ${onlineCount}/${maxCount}`, 'online');
+        return;
+      }
+
+      // 2. Fallback to Query protocol (UDP)
+      const response = await status(config.minecraft.serverHost, config.minecraft.serverPort, {
+        timeout: 3000,
       });
+      
+      this.updatePresence(`Online: ${response.players.online}/${response.players.max}`, 'online');
 
     } catch (error) {
-      
-      this.client.user.setPresence({
-        activities: [{ name: 'Server Offline', type: ActivityType.Watching }],
-        status: 'dnd',
-      });
+      console.warn(`[StatusService] All status checks failed for ${config.minecraft.serverHost}:${config.minecraft.serverPort}: ${error.message}`);
+      this.updatePresence('Server Offline', 'dnd');
     }
+  }
+
+  /**
+   * Updates the bot presence.
+   * @param {string} text 
+   * @param {'online' | 'idle' | 'dnd' | 'invisible'} status 
+   */
+  updatePresence(text, status) {
+    this.client.user.setPresence({
+      activities: [{ name: text, type: ActivityType.Watching }],
+      status: status,
+    });
   }
 }
 

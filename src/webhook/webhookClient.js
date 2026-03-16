@@ -39,7 +39,7 @@ export class WebhookClient {
     const requests = webhooks.map(async (webhook) => {
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 5000);
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
 
         const response = await fetch(webhook.url, {
           method: 'POST',
@@ -69,9 +69,11 @@ export class WebhookClient {
         return { name: webhook.name, ok: true };
       } catch (error) {
         if (error.name === 'AbortError') {
-          console.error(`[Webhook][${webhook.name}] Request timed out after 5 seconds.`);
+          console.error(`[Webhook][${webhook.name}] Request timed out after 10 seconds.`);
+          return { name: webhook.name, ok: false, error: 'timeout' };
         } else {
           console.error(`[Webhook][${webhook.name}] Error during call:`, error.message);
+          return { name: webhook.name, ok: false, error: error.message };
         }
       }
     });
