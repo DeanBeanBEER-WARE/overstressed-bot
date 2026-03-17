@@ -18,6 +18,7 @@ import { maintenanceCommand } from '../commands/maintenance.js';
 import { purgeCommand } from '../commands/purge.js';
 import { muteCommand } from '../commands/mute.js';
 import { unmuteCommand } from '../commands/unmute.js';
+import { command as syncAllRanksCommand } from '../commands/sync_all_ranks.js';
 import { config } from '../config/config.js';
 import { webhookClient } from '../webhook/webhookClient.js';
 import { linkService } from '../services/linkService.js';
@@ -56,6 +57,7 @@ export async function createClient() {
   client.commands.set(purgeCommand.data.name, purgeCommand);
   client.commands.set(muteCommand.data.name, muteCommand);
   client.commands.set(unmuteCommand.data.name, unmuteCommand);
+  client.commands.set(syncAllRanksCommand.data.name, syncAllRanksCommand);
 
   // Handle chat bridge (Discord -> Minecraft)
   client.on(Events.MessageCreate, async message => {

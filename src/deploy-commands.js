@@ -19,6 +19,7 @@ import { maintenanceCommand } from './commands/maintenance.js';
 import { purgeCommand } from './commands/purge.js';
 import { muteCommand } from './commands/mute.js';
 import { unmuteCommand } from './commands/unmute.js';
+import { command as syncAllRanksCommand } from './commands/sync_all_ranks.js';
 
 const commands = [
   rankCommand.data.toJSON(),
@@ -40,6 +41,7 @@ const commands = [
   purgeCommand.data.toJSON(),
   muteCommand.data.toJSON(),
   unmuteCommand.data.toJSON(),
+  syncAllRanksCommand.data.toJSON(),
 ];
 
 const rest = new REST().setToken(config.discord.token);

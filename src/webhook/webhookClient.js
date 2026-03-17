@@ -137,6 +137,16 @@ export class WebhookClient {
       minecraftName: minecraftName,
     });
   }
+
+  /**
+   * Queries the Minecraft server for all verified users.
+   * @returns {Promise<Array>} Array of webhook responses containing the list of verified users.
+   */
+  async getAllVerifiedUsers() {
+    return await this.notify({
+      action: 'get_all_verified_users'
+    });
+  }
 }
 
 export const webhookClient = new WebhookClient();
