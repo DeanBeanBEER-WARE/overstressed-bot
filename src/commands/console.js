@@ -6,6 +6,34 @@ import { config } from '../config/config.js';
  * Slash command implementation for /console.
  * Executes a console command on the Minecraft server via the webhook bridge.
  */
+/**
+ * Console command for executing Minecraft server commands via Discord.
+ * Requires Admin role or Administrator permission to use.
+ * 
+ * @typedef {Object} ConsoleCommand
+ * @property {SlashCommandBuilder} data - The slash command builder configuration
+ * @property {Function} execute - Executes the console command
+ * 
+ * @type {ConsoleCommand}
+ */
+
+/**
+ * Executes the /console slash command.
+ * 
+ * Validates user permissions (Admin role or Administrator permission),
+ * sends the command to the Minecraft server via webhook bridge,
+ * and returns the execution result to the user.
+ * 
+ * @async
+ * @function execute
+ * @param {import('discord.js').ChatInputCommandInteraction} interaction - The Discord interaction object containing the command invocation details
+ * @returns {Promise<void>}
+ * @throws {Error} If webhook communication fails
+ * 
+ * @example
+ * // User executes: /console command:say Hello World
+ * // Bot validates permissions and sends command to server
+ */
 export const consoleCommand = {
   data: new SlashCommandBuilder()
     .setName('console')

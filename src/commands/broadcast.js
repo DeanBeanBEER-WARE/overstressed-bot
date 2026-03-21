@@ -6,6 +6,20 @@ import { config } from '../config/config.js';
  * Slash command implementation for /broadcast.
  * Sends a global announcement to the Minecraft server.
  */
+/**
+ * Broadcast command for sending global announcements to the Minecraft server.
+ * @type {Object}
+ * @property {SlashCommandBuilder} data - The slash command builder configuration
+ * @property {Function} execute - Executes the broadcast command
+ * 
+ * @description
+ * This command allows users with Admin role or Administrator permissions to send
+ * global announcements to the connected Minecraft server via webhook bridge.
+ * 
+ * @example
+ * // Usage in Discord
+ * /broadcast message: "Server maintenance in 10 minutes"
+ */
 export const broadcastCommand = {
   data: new SlashCommandBuilder()
     .setName('broadcast')

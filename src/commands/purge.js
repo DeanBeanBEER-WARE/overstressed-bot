@@ -2,8 +2,7 @@ import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
 import { config } from '../config/config.js';
 
 /**
- * Slash command implementation for /purge.
- * Deletes all messages in the current channel (admin only).
+ * Purge command - Deletes messages from the current channel
  */
 export const purgeCommand = {
   data: new SlashCommandBuilder()
@@ -24,7 +23,9 @@ export const purgeCommand = {
    * @returns {Promise<void>}
    */
   async execute(interaction) {
-    // Permission check: Admin only
+    /**
+     * Check if user has admin role or administrator permission
+     */
     const hasPermission =
       (config.discord.adminRoleId && interaction.member.roles.cache.has(config.discord.adminRoleId)) ||
       interaction.member.permissions.has(PermissionFlagsBits.Administrator);
@@ -45,7 +46,9 @@ export const purgeCommand = {
       let totalDeleted = 0;
       let remainingToDelete = amount;
 
-      // Discord limits: bulkDelete only works for messages < 14 days, max 100 per request
+      /**
+       * Discord API limits: bulkDelete only works for messages < 14 days old, max 100 per request
+       */
       const twoWeeksAgo = Date.now() - (14 * 24 * 60 * 60 * 1000);
 
       await interaction.editReply({
@@ -58,7 +61,9 @@ export const purgeCommand = {
         
         if (fetchedMessages.size === 0) break;
 
-        // Separate recent and old messages
+        /**
+         * Filter messages into recent (< 14 days) and old (>= 14 days) categories
+         */
         const recentMessages = fetchedMessages.filter(
           msg => msg.createdTimestamp > twoWeeksAgo
         );
@@ -66,18 +71,24 @@ export const purgeCommand = {
           msg => msg.createdTimestamp <= twoWeeksAgo
         );
 
-        // Bulk delete recent messages (fast)
+        /**
+         * Use bulkDelete for recent messages (fast operation)
+         */
         if (recentMessages.size > 0) {
           const deleted = await channel.bulkDelete(recentMessages, true);
           totalDeleted += deleted.size;
         }
 
-        // Individually delete old messages (slow)
+        /**
+         * Delete old messages individually due to API restrictions (slow operation)
+         */
         for (const [, message] of oldMessages) {
           try {
             await message.delete();
             totalDeleted++;
-            // Rate limit protection: 1 delete per second for old messages
+            /**
+             * Apply rate limiting: 1 delete per second to avoid throttling
+             */
             await new Promise(resolve => setTimeout(resolve, 1000));
           } catch (error) {
             console.error('[PurgeCommand] Failed to delete old message:', error.message);
@@ -86,15 +97,19 @@ export const purgeCommand = {
 
         remainingToDelete -= fetchedMessages.size;
 
-        // Update progress every 100 messages
+        /**
+         * Report progress to user every 100 deleted messages
+         */
         if (totalDeleted % 100 === 0 && totalDeleted > 0) {
           await interaction.editReply({
             content: `Purging... Deleted ${totalDeleted} messages so far.`,
-          }).catch(() => {}); // Ignore edit errors
+          }).catch(() => {});
         }
 
-        // Wait between batches to let Discord update its cache
-        // This prevents the command from stopping prematurely
+        /**
+         * Wait between batch requests to allow Discord cache to update
+         * and prevent premature termination of the command
+         */
         await new Promise(resolve => setTimeout(resolve, 1500));
       }
 

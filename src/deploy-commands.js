@@ -21,6 +21,7 @@ import { muteCommand } from './commands/mute.js';
 import { unmuteCommand } from './commands/unmute.js';
 import { command as syncAllRanksCommand } from './commands/sync_all_ranks.js';
 
+/** @type {Array} Array of all slash command data */
 const commands = [
   rankCommand.data.toJSON(),
   linkCommand.data.toJSON(),
@@ -44,10 +45,13 @@ const commands = [
   syncAllRanksCommand.data.toJSON(),
 ];
 
+/** @type {REST} Discord REST client instance */
 const rest = new REST().setToken(config.discord.token);
 
 /**
  * Deploys slash commands to the configured guild.
+ * @async
+ * @returns {Promise<void>}
  */
 (async () => {
   try {

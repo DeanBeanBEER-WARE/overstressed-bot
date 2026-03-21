@@ -6,6 +6,9 @@ import { config } from '../config/config.js';
 /**
  * Slash command implementation for /mute.
  * Mutes a player on the Minecraft server using the webhook bridge.
+ * @type {Object}
+ * @property {SlashCommandBuilder} data - The command builder configuration
+ * @property {Function} execute - The command execution handler
  */
 export const muteCommand = {
   data: new SlashCommandBuilder()
@@ -32,7 +35,7 @@ export const muteCommand = {
 
   /**
    * Executes the /mute command.
-   * @param {import('discord.js').ChatInputCommandInteraction} interaction - The interaction object.
+   * @param {import('discord.js').ChatInputCommandInteraction} interaction - The interaction object
    * @returns {Promise<void>}
    */
   async execute(interaction) {
@@ -49,7 +52,7 @@ export const muteCommand = {
 
     let minecraftName = interaction.options.getString('player');
     const discordUser = interaction.options.getUser('user');
-    const duration = interaction.options.getInteger('duration'); // null = permanent
+    const duration = interaction.options.getInteger('duration');
     const reason = interaction.options.getString('reason') || 'No reason provided';
 
     // Resolve Minecraft name
@@ -73,11 +76,10 @@ export const muteCommand = {
     await interaction.deferReply({ ephemeral: true });
 
     try {
-      // Send mute request via Webhook bridge
       const results = await webhookClient.notify({
         action: 'mute_player',
         minecraftName: minecraftName,
-        duration: duration, // null = permanent, number = minutes
+        duration: duration,
         reason: reason
       });
 

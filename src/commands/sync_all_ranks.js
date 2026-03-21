@@ -105,7 +105,7 @@ export const command = {
 
       // 7. Final summary reply
       return interaction.editReply({
-        content: `**Sync Complete!**\n✅ Successfully synced ranks for **${syncCount}** users.\n❌ Failed to sync **${failedCount}** users (e.g., no longer in Discord).`,
+        content: `**Sync Complete!**\nSuccessfully synced ranks for **${syncCount}** users.\nFailed to sync **${failedCount}** users (e.g., no longer in Discord).`,
       });
 
     } catch (error) {

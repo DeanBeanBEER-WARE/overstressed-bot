@@ -4,8 +4,10 @@ import { join } from 'path';
 const linksPath = join(process.cwd(), 'links.json');
 
 /**
- * Service for managing permanent links between Discord users and Minecraft usernames.
- * Also handles temporary verification codes.
+ * Manages the permanent association between Discord users and Minecraft usernames.
+ * Handles temporary verification codes and persistent link storage.
+ * 
+ * @class LinkService
  */
 export class LinkService {
   constructor() {
@@ -18,8 +20,9 @@ export class LinkService {
   }
 
   /**
-   * Loads links from the JSON file.
-   * @returns {Object}
+   * Reads and parses the persistent links from the JSON storage file.
+   * 
+   * @returns {Object} A dictionary mapping Discord IDs to Minecraft usernames.
    */
   loadLinks() {
     if (!existsSync(linksPath)) {
@@ -35,7 +38,7 @@ export class LinkService {
   }
 
   /**
-   * Saves links to the JSON file.
+   * Serializes and writes the current link associations to the JSON storage file.
    */
   saveLinks() {
     try {
@@ -46,7 +49,8 @@ export class LinkService {
   }
 
   /**
-   * Links a Discord user to a Minecraft username.
+   * Associates a Discord ID with a specific Minecraft username.
+   * 
    * @param {string} discordId - The Discord user ID.
    * @param {string} minecraftName - The Minecraft username.
    */
@@ -56,26 +60,29 @@ export class LinkService {
   }
 
   /**
-   * Gets the Minecraft username for a Discord user.
+   * Retrieves the associated Minecraft username for a given Discord user.
+   * 
    * @param {string} discordId - The Discord user ID.
-   * @returns {string|null}
+   * @returns {string|null} The linked Minecraft username, or null if no link exists.
    */
   getMinecraftName(discordId) {
     return this.links[discordId] || null;
   }
 
   /**
-   * Gets all linked accounts.
-   * @returns {Object}
+   * Retrieves all currently registered Discord-to-Minecraft associations.
+   * 
+   * @returns {Object} A dictionary containing all established links.
    */
   getAllLinks() {
     return this.links;
   }
 
   /**
-   * Gets the Discord ID linked to a Minecraft name.
+   * Resolves the Discord ID corresponding to a specified Minecraft username.
+   * 
    * @param {string} minecraftName - The Minecraft username.
-   * @returns {string|null}
+   * @returns {string|null} The linked Discord ID, or null if no link exists.
    */
   getDiscordIdByMinecraftName(minecraftName) {
     const target = minecraftName.toLowerCase();
@@ -88,9 +95,10 @@ export class LinkService {
   }
 
   /**
-   * Removes a link by Discord ID.
+   * Deletes an existing link association for a specific Discord user.
+   * 
    * @param {string} discordId - The Discord user ID.
-   * @returns {boolean} True if a link was removed.
+   * @returns {boolean} True if a link was successfully removed, false otherwise.
    */
   unlink(discordId) {
     if (this.links[discordId]) {
@@ -102,10 +110,11 @@ export class LinkService {
   }
 
   /**
-   * Creates a temporary verification code for a user.
+   * Generates a temporary verification code to authenticate a linking request.
+   * 
    * @param {string} discordId - The Discord user ID.
    * @param {string} minecraftName - The Minecraft username.
-   * @returns {string} The generated 6-digit code.
+   * @returns {string} A randomly generated 6-digit verification code.
    */
   createVerification(discordId, minecraftName) {
     const code = Math.floor(100000 + Math.random() * 900000).toString();
@@ -118,10 +127,11 @@ export class LinkService {
   }
 
   /**
-   * Confirms a verification code.
+   * Validates a verification code against a pending link request.
+   * 
    * @param {string} minecraftName - The Minecraft username.
-   * @param {string} code - The code provided by the player in-game.
-   * @returns {string|null} The Discord ID if successful, otherwise null.
+   * @param {string} code - The code provided by the player.
+   * @returns {string|null} The linked Discord ID on successful verification, otherwise null.
    */
   confirmVerification(minecraftName, code) {
     const pending = this.pendingVerifications[minecraftName.toLowerCase()];

@@ -24,7 +24,9 @@ export const resyncCommand = {
    * @returns {Promise<void>}
    */
   async execute(interaction) {
-    // Permission check: Admin only
+    /**
+     * Permission check: Admin only
+     */
     const hasPermission =
       (config.discord.adminRoleId && interaction.member.roles.cache.has(config.discord.adminRoleId)) ||
       interaction.member.permissions.has(PermissionFlagsBits.Administrator);
@@ -41,10 +43,14 @@ export const resyncCommand = {
     await interaction.deferReply({ ephemeral: true });
 
     try {
-      // Query the server for current verification status
+      /**
+       * Query the server for current verification status
+       */
       const responses = await webhookClient.getVerifiedUser(minecraftName);
       
-      // Get first successful response
+      /**
+       * Get first successful response
+       */
       const serverResponse = responses?.find(r => r?.ok && r?.data);
       
       if (!serverResponse || !serverResponse.data) {
@@ -55,30 +61,46 @@ export const resyncCommand = {
 
       const { discordId, isVerified } = serverResponse.data;
 
-      // Get current Discord link status
+      /**
+       * Get current Discord link status
+       */
       const currentDiscordId = linkService.getDiscordIdByMinecraftName(minecraftName);
 
       if (isVerified && discordId) {
-        // Server says: Player IS linked to discordId
+        /**
+         * Server says: Player IS linked to discordId
+         */
         
         if (currentDiscordId !== discordId) {
-          // Discord has wrong/no link - fix it
+          /**
+           * Discord has wrong/no link - fix it
+           */
           if (currentDiscordId) {
-            linkService.unlink(currentDiscordId); // Remove old link
+            /**
+             * Remove old link
+             */
+            linkService.unlink(currentDiscordId);
           }
-          linkService.link(discordId, minecraftName); // Add correct link
+          /**
+           * Add correct link
+           */
+          linkService.link(discordId, minecraftName);
           
           await interaction.editReply({
             content: `Sync complete: **${minecraftName}** is now linked to <@${discordId}> (matching server state).`
           });
         } else {
-          // Already in sync
+          /**
+           * Already in sync
+           */
           await interaction.editReply({
             content: `Already in sync: **${minecraftName}** is linked to <@${discordId}>.`
           });
         }
 
-        // Trigger rank sync if user is in guild
+        /**
+         * Trigger rank sync if user is in guild
+         */
         try {
           const member = await interaction.guild.members.fetch(discordId).catch(() => null);
           if (member) {
@@ -90,17 +112,23 @@ export const resyncCommand = {
         }
 
       } else {
-        // Server says: Player is NOT linked
+        /**
+         * Server says: Player is NOT linked
+         */
         
         if (currentDiscordId) {
-          // Discord still has a link - remove it
+          /**
+           * Discord still has a link - remove it
+           */
           linkService.unlink(currentDiscordId);
           
           await interaction.editReply({
             content: `Sync complete: **${minecraftName}** is now unlinked (matching server state). Previous link to <@${currentDiscordId}> removed.`
           });
         } else {
-          // Already in sync (no link)
+          /**
+           * Already in sync (no link)
+           */
           await interaction.editReply({
             content: `Already in sync: **${minecraftName}** is not linked on either server or Discord.`
           });

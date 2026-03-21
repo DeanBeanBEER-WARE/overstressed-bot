@@ -7,6 +7,9 @@ import { scannerService } from '../services/scannerService.js';
 /**
  * Slash command implementation for /link.
  * Allows users with Member role to link their Minecraft username.
+ * @type {Object}
+ * @property {SlashCommandBuilder} data - The slash command builder configuration
+ * @property {Function} execute - Command execution handler
  */
 export const linkCommand = {
   data: new SlashCommandBuilder()
@@ -23,7 +26,8 @@ export const linkCommand = {
 
   /**
    * Executes the /link command.
-   * @param {import('discord.js').ChatInputCommandInteraction} interaction - The interaction object.
+   * @async
+   * @param {import('discord.js').ChatInputCommandInteraction} interaction - The interaction object
    * @returns {Promise<void>}
    */
   async execute(interaction) {

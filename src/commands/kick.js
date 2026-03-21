@@ -1,11 +1,18 @@
+/**
+ * @fileoverview Slash command implementation for /kick.
+ * Kicks a player from the Minecraft server using the webhook bridge.
+ */
+
 import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
 import { webhookClient } from '../webhook/webhookClient.js';
 import { linkService } from '../services/linkService.js';
 import { config } from '../config/config.js';
 
 /**
- * Slash command implementation for /kick.
- * Kicks a player from the Minecraft server using the webhook bridge.
+ * Slash command for kicking players from the Minecraft server.
+ * @type {Object}
+ * @property {SlashCommandBuilder} data - The slash command builder configuration
+ * @property {Function} execute - Executes the kick command
  */
 export const kickCommand = {
   data: new SlashCommandBuilder()
@@ -27,7 +34,8 @@ export const kickCommand = {
 
   /**
    * Executes the /kick command.
-   * @param {import('discord.js').ChatInputCommandInteraction} interaction - The interaction object.
+   * @async
+   * @param {import('discord.js').ChatInputCommandInteraction} interaction - The interaction object
    * @returns {Promise<void>}
    */
   async execute(interaction) {

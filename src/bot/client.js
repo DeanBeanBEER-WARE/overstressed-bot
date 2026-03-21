@@ -24,7 +24,13 @@ import { webhookClient } from '../webhook/webhookClient.js';
 import { linkService } from '../services/linkService.js';
 
 /**
- * Initializes and configures the Discord client.
+ * Factory function to instantiate and configure the Discord Client.
+ * Registers slash commands and sets up event listeners for messages, 
+ * interactions, and guild member events.
+ * 
+ * @async
+ * @function createClient
+ * @returns {Promise<Client>} A configured instance of the Discord Client.
  */
 export async function createClient() {
   const client = new Client({
@@ -36,7 +42,10 @@ export async function createClient() {
     ],
   });
 
-  // Store commands in a Collection for easy access
+  /**
+   * Command registry attached to the client for runtime access.
+   * @type {Collection<string, Object>}
+   */
   client.commands = new Collection();
   client.commands.set(rankCommand.data.name, rankCommand);
   client.commands.set(linkCommand.data.name, linkCommand);
@@ -59,9 +68,12 @@ export async function createClient() {
   client.commands.set(unmuteCommand.data.name, unmuteCommand);
   client.commands.set(syncAllRanksCommand.data.name, syncAllRanksCommand);
 
-  // Handle chat bridge (Discord -> Minecraft)
+  /**
+   * MessageCreate event listener.
+   * Processes chat messages for the Discord to Minecraft chat bridge.
+   * Filters out messages from bots and channels outside the configured chat channel.
+   */
   client.on(Events.MessageCreate, async message => {
-    // Ignore bot messages and messages outside the configured chat channel
     if (message.author.bot) return;
     if (message.channelId !== config.discord.chatChannelId) return;
 
@@ -74,37 +86,44 @@ export async function createClient() {
   });
 
   /**
-   * IMPORTANT: All slash command executions are logged to the configured logging channel.
-   * This logic is central and applies to all current and future slash commands.
+   * InteractionCreate event listener.
+   * Handles the execution of slash commands and logs command usage centrally.
+   * Ensures that command execution is tracked in the designated logging channel.
    */
-  // Handle interactions (slash commands)
   client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isChatInputCommand()) return;
 
     const command = client.commands.get(interaction.commandName);
     if (!command) return;
 
-    // Central Command Logging (non-blocking to prevent interaction timeout)
     try {
       const loggingChannel = await client.channels.fetch(config.discord.loggingChannelId).catch(() => null);
       if (loggingChannel && loggingChannel.isTextBased()) {
         const options = interaction.options.data.map(opt => {
-          if (opt.type === 1) { // Subcommand
+          /** 
+           * Format option value if it is a Subcommand. 
+           */
+          if (opt.type === 1) {
             const subOptions = opt.options?.map(subOpt => {
-              if (subOpt.type === 6 || subOpt.type === 9) { // User or Mentionable
+              /** 
+               * Format sub-option value if it is a User or Mentionable type. 
+               */
+              if (subOpt.type === 6 || subOpt.type === 9) {
                 return `${subOpt.name}: <@${subOpt.value}>`;
               }
               return `${subOpt.name}: ${subOpt.value}`;
             }).join(', ') || '';
             return `${opt.name} (${subOptions})`;
           }
-          if (opt.type === 6 || opt.type === 9) { // User or Mentionable
+          /** 
+           * Format option value if it is a User or Mentionable type. 
+           */
+          if (opt.type === 6 || opt.type === 9) {
             return `${opt.name}: <@${opt.value}>`;
           }
           return `${opt.name}: ${opt.value}`;
         }).join(', ') || 'None';
 
-        // Fire-and-forget logging (don't await to prevent blocking command execution)
         loggingChannel.send({
           content: `📝 **Command Log**: <@${interaction.user.id}> executed \`/${interaction.commandName}\` with options: ${options} in <#${interaction.channelId}>`
         }).catch(logError => {
@@ -129,7 +148,10 @@ export async function createClient() {
     }
   });
 
-  // Log when a member leaves the server
+  /**
+   * GuildMemberRemove event listener.
+   * Logs member departures to the configured logging channel.
+   */
   client.on(Events.GuildMemberRemove, async member => {
     try {
       const loggingChannel = await client.channels.fetch(config.discord.loggingChannelId).catch(() => null);
@@ -143,7 +165,10 @@ export async function createClient() {
     }
   });
 
-  // Log when bot is ready
+  /**
+   * ClientReady event listener.
+   * Triggers when the bot has successfully authenticated and connected to Discord.
+   */
   client.once(Events.ClientReady, c => {
     console.log(`[Client] Ready! Logged in as ${c.user.tag}`);
   });

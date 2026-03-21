@@ -1,10 +1,34 @@
 import { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } from 'discord.js';
 import { webhookClient } from '../webhook/webhookClient.js';
 import { config } from '../config/config.js';
+/**
+ * Online command module for Discord.js slash commands.
+ * Displays the list of currently online players on the Minecraft server.
+ * 
+ * @module commands/online
+ * @requires discord.js
+ */
 
 /**
- * Slash command implementation for /online.
- * Displays online players using the webhook bridge.
+ * @typedef {Object} OnlineCommand
+ * @property {SlashCommandBuilder} data - The slash command builder configuration
+ * @property {Function} execute - The command execution handler
+ */
+
+/**
+ * Online command object.
+ * Retrieves and displays online players from the Minecraft server via a webhook bridge.
+ * Requires the Member role or Administrator permission to execute.
+ * 
+ * @type {OnlineCommand}
+ * @property {SlashCommandBuilder} data - Slash command configuration
+ *   - Name: 'online'
+ *   - Description: Show online players on the Minecraft server
+ *   - DM Permission: disabled
+ * @property {AsyncFunction} execute - Handles the /online command interaction
+ *   @param {import('discord.js').ChatInputCommandInteraction} interaction - The slash command interaction
+ *   @returns {Promise<void>}
+ *   @throws Will catch and handle errors from the webhook bridge
  */
 export const onlineCommand = {
   data: new SlashCommandBuilder()

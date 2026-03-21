@@ -8,10 +8,14 @@ import { isSupportedRank, ranks } from '../config/ranks.js';
  * Handles adding and removing ranks from users.
  */
 export const rankCommand = {
+  /**
+   * Defines the slash command structure with subcommands for adding and removing ranks.
+   * @type {SlashCommandBuilder}
+   */
   data: new SlashCommandBuilder()
     .setName('rank')
     .setDescription('Manage user ranks')
-    .setDMPermission(false) // Guild-only command
+    .setDMPermission(false)
     .addSubcommand(subcommand =>
       subcommand
         .setName('add')
@@ -54,7 +58,9 @@ export const rankCommand = {
    * @returns {Promise<void>}
    */
   async execute(interaction) {
-    // Permission check: Only Admin role or Administrator permission
+    /**
+     * Checks if the user has admin role or administrator permission.
+     */
     const hasPermission =
       (config.discord.adminRoleId && interaction.member.roles.cache.has(config.discord.adminRoleId)) ||
       interaction.member.permissions.has(PermissionFlagsBits.Administrator);
@@ -71,7 +77,9 @@ export const rankCommand = {
     const rankKey = interaction.options.getString('rank');
     const minecraftName = interaction.options.getString('minecraftname');
 
-    // Basic Minecraft name validation
+    /**
+     * Validates the Minecraft username format and length.
+     */
     if (!minecraftName || minecraftName.length < 3 || minecraftName.length > 16 || !/^\w+$/.test(minecraftName)) {
       return interaction.reply({
         content: `Error: "${minecraftName}" is not a valid Minecraft username.`,
@@ -79,7 +87,9 @@ export const rankCommand = {
       });
     }
 
-    // Basic rank validation
+    /**
+     * Validates that the provided rank is supported.
+     */
     if (!isSupportedRank(rankKey)) {
       const supportedRanks = Object.keys(ranks).join(', ');
       return interaction.reply({
@@ -88,7 +98,9 @@ export const rankCommand = {
       });
     }
 
-    // Defer reply as role management and webhook might take a moment
+    /**
+     * Defers the reply as role management and webhook might take a moment.
+     */
     await interaction.deferReply();
 
     const targetMember = await interaction.guild.members.fetch(targetUser.id).catch(() => null);
@@ -96,6 +108,9 @@ export const rankCommand = {
       return interaction.editReply('Error: Could not find that user in this guild.');
     }
 
+    /**
+     * Executes the appropriate rank modification based on subcommand.
+     */
     let result;
     if (subcommand === 'add') {
       result = await rankService.addRank(targetMember, rankKey, minecraftName);
