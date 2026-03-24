@@ -29,3 +29,4 @@ Thumbs.db
 npm-debug.log*
 *.code-workspace
 webhooks.json
+resources/ranks.json

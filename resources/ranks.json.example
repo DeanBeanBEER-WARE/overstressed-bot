@@ -1,38 +1,38 @@
 {
   "owner": {
-    "roleId": "1470449611570151434",
+    "roleId": "123456789012345678",
     "displayName": "Owner"
   },
   "dev": {
-    "roleId": "1468399574552018956",
+    "roleId": "123456789012345678",
     "displayName": "Dev"
   },
   "trialdev": {
-    "roleId": "1479108727742398504",
+    "roleId": "123456789012345678",
     "displayName": "Trial Dev"
   },
   "management": {
-    "roleId": "1468238763649011907",
+    "roleId": "123456789012345678",
     "displayName": "Management"
   },
   "admin": {
-    "roleId": "1468167659240558635",
+    "roleId": "123456789012345678",
     "displayName": "Admin"
   },
   "trialadmin": {
-    "roleId": "1468238122553704620",
+    "roleId": "123456789012345678",
     "displayName": "Trial Admin"
   },
   "mod": {
-    "roleId": "1468233265101017089",
+    "roleId": "123456789012345678",
     "displayName": "Mod"
   },
   "trialmod": {
-    "roleId": "1468237463565635811",
+    "roleId": "123456789012345678",
     "displayName": "Trial Mod"
   },
   "supporter": {
-    "roleId": "1473023389814886480",
+    "roleId": "123456789012345678",
     "displayName": "Supporter"
   },
   "builder": {
@@ -44,11 +44,11 @@
     "displayName": "VIP+"
   },
   "vip": {
-    "roleId": "1470506730092757185",
+    "roleId": "123456789012345678",
     "displayName": "VIP"
   },
   "default": {
-    "roleId": "1468234100208042218",
+    "roleId": "123456789012345678",
     "displayName": "Member"
   },
   "test": {
