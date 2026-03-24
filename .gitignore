@@ -28,3 +28,4 @@ Thumbs.db
 *.log
 npm-debug.log*
 *.code-workspace
+webhooks.json
