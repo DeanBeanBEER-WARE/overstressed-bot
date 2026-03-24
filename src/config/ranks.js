@@ -6,7 +6,7 @@ import { join } from 'path';
  * Loaded from ranks.json in the project root.
  * Maps internal rank keys to Discord role IDs.
  */
-const ranksPath = join(process.cwd(), 'ranks.json');
+const ranksPath = join(process.cwd(), 'resources', 'ranks.json');
 let ranksData = {};
 
 try {

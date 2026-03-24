@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join } from 'path';
 
-const linksPath = join(process.cwd(), 'links.json');
+const linksPath = join(process.cwd(), 'resources', 'links.json');
 
 /**
  * Manages the permanent association between Discord users and Minecraft usernames.

@@ -1,25 +1,25 @@
 import { REST, Routes } from 'discord.js';
-import { config } from './config/config.js';
-import { rankCommand } from './commands/rank.js';
-import { linkCommand } from './commands/link.js';
-import { unlinkCommand } from './commands/unlink.js';
-import { whitelistCommand } from './commands/whitelist.js';
-import { resyncCommand } from './commands/resync.js';
-import { onlineCommand } from './commands/online.js';
-import { tpsCommand } from './commands/tps.js';
-import { statsCommand } from './commands/stats.js';
-import { kickCommand } from './commands/kick.js';
-import { broadcastCommand } from './commands/broadcast.js';
-import { uptimeCommand } from './commands/uptime.js';
-import { topCommand } from './commands/top.js';
-import { stopCommand } from './commands/stop.js';
-import { restartCommand } from './commands/restart.js';
-import { consoleCommand } from './commands/console.js';
-import { maintenanceCommand } from './commands/maintenance.js';
-import { purgeCommand } from './commands/purge.js';
-import { muteCommand } from './commands/mute.js';
-import { unmuteCommand } from './commands/unmute.js';
-import { command as syncAllRanksCommand } from './commands/sync_all_ranks.js';
+import { config } from './src/config/config.js';
+import { rankCommand } from './src/commands/rank.js';
+import { linkCommand } from './src/commands/link.js';
+import { unlinkCommand } from './src/commands/unlink.js';
+import { whitelistCommand } from './src/commands/whitelist.js';
+import { resyncCommand } from './src/commands/resync.js';
+import { onlineCommand } from './src/commands/online.js';
+import { tpsCommand } from './src/commands/tps.js';
+import { statsCommand } from './src/commands/stats.js';
+import { kickCommand } from './src/commands/kick.js';
+import { broadcastCommand } from './src/commands/broadcast.js';
+import { uptimeCommand } from './src/commands/uptime.js';
+import { topCommand } from './src/commands/top.js';
+import { stopCommand } from './src/commands/stop.js';
+import { restartCommand } from './src/commands/restart.js';
+import { consoleCommand } from './src/commands/console.js';
+import { maintenanceCommand } from './src/commands/maintenance.js';
+import { purgeCommand } from './src/commands/purge.js';
+import { muteCommand } from './src/commands/mute.js';
+import { unmuteCommand } from './src/commands/unmute.js';
+import { command as syncAllRanksCommand } from './src/commands/sync_all_ranks.js';
 
 /** @type {Array} Array of all slash command data */
 const commands = [

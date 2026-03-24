@@ -2,11 +2,11 @@
   "name": "neoforge-discord-bot",
   "version": "1.0.0",
   "description": "Discord bot for managing ranks and notifying a Minecraft server",
-  "main": "src/index.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node src/index.js",
-    "deploy-commands": "node src/deploy-commands.js"
+    "start": "node index.js",
+    "deploy-commands": "node deploy-commands.js"
   },
   "keywords": [
     "discord",

@@ -1,7 +1,7 @@
-import { createClient } from './bot/client.js';
-import { config } from './config/config.js';
-import { scannerService } from './services/scannerService.js';
-import { statusService } from './services/statusService.js';
+import { createClient } from './src/bot/client.js';
+import { config } from './src/config/config.js';
+import { scannerService } from './src/services/scannerService.js';
+import { statusService } from './src/services/statusService.js';
 
 /**
  * Initializes and starts the Discord bot application.

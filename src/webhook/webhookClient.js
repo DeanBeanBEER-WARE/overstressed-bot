@@ -196,7 +196,7 @@ class WebhookEndpoint {
  */
 export class WebhookClient {
   constructor() {
-    this.webhooksPath = join(process.cwd(), 'webhooks.json');
+    this.webhooksPath = join(process.cwd(), 'resources', 'webhooks.json');
     this.endpoints = new Map();
   }
 
